@@ -27,6 +27,7 @@ export const getProject = async (req, res) => {
 };
 
 export const createProject = async (req, res) => {
+  console.log(req.body);
   const { title, description } = req.body;
 
   try {

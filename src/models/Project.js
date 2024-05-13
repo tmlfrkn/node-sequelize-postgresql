@@ -4,7 +4,7 @@ import { sequelize } from "../db/database.js";
 import { Workpackage } from "./Workpackage.js";
 
 export const Project = sequelize.define(
-  "projects",
+  "project",
   {
     id: {
       type: DataTypes.INTEGER,

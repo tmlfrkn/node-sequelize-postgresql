@@ -76,8 +76,8 @@
 * `npm i` to install dependencies
 * Create `.env` and add database credentials - see `.example.env`
 * `npm run dev` runs app in the development mode with auto-restart.
-* Open [http://localhost:3000/projects](http://localhost:3000/projects) to see projects list in browser
-* Open [http://localhost:3000/workpackages](http://localhost:3000/workpackages) to see workpackages list in browser
+* Open [http://localhost:3000/api/projects](http://localhost:3000/projects) to see projects list in browser
+* Open [http://localhost:3000/api/workpackages](http://localhost:3000/workpackages) to see workpackages list in browser
 * CRUD operations can be performed using the Thunder Client VS Code extension
 * PostgreSQL console can be used to work with database: `\c projects` to connect to projects database, `\dt` to list tables, `SELECT * FROM projects;` to see projects table
 

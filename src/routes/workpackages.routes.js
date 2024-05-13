@@ -6,7 +6,7 @@ import {
   updateWorkpackage,
   deleteWorkpackage,
   getWorkpackage,
-} from "../controllers/workpackages.controller.js";
+} from "../service/workpackages.controller.js";
 
 const router = Router();
 
