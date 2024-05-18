@@ -1,9 +1,9 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../db/database.js";
+import { Student } from "./Student.js";
 
-
-export const Admin = sequelize.define(
-    "admin",
+export const Document = sequelize.define(
+    "student_document",
     {
       id: {
         type: DataTypes.INTEGER,
@@ -11,31 +11,27 @@ export const Admin = sequelize.define(
         unique: true,
         autoIncrement: true,
       },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      password: {
-        type: DataTypes.STRING,
-        allowNull: false
-      },
-      address: {
+      fileName: {
         type: DataTypes.STRING,
         allowNull: true,
         defaultValue: null
       },
-      userId: {
+      fileData: {
+        type: DataTypes.BLOB,
+        allowNull: true,
+        defaultValue: null
+      },
+      // Yeni eklenen studentId alanı
+      studentId: {
         type: DataTypes.INTEGER,
-        allowNull: true,
-        defaultValue: null
-      },
-      phone: {
-        type: DataTypes.STRING,
-        allowNull: true,
-        defaultValue: null
+        allowNull: false,
+        references: {
+          model: Student,
+          key: 'studentId' // Düzeltildi
+        }
       }
     },
     {
       timestamps: true,
     }
-  );
+);

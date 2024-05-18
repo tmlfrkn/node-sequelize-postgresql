@@ -3,6 +3,7 @@ import { User } from '../models/User.js';
 import { Document } from '../models/Document.js';
 import jwt from "jsonwebtoken";
 
+
 export async function studentRegister(studentMail, studentId) {
     const existingStudent = await Student.findOne({
         where: {

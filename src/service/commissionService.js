@@ -3,11 +3,13 @@ import { User } from "../models/User.js";
 import { Document } from "../models/Document.js";
 import jwt from "jsonwebtoken";
 import fs from "fs"
+import bcrypt from "bcrypt";
+
 
 export async function commissionSignUp(commissionMail, password){
     const existingCommission = await InternshipCommission.findOne({
         where: {
-            id: 1
+            id: 5
         }
     })
 
@@ -25,12 +27,14 @@ export async function commissionSignUp(commissionMail, password){
 
     const commission = await InternshipCommission.create({
         email: commissionMail, 
-        password,
+        password: await bcrypt.hash(password, 10),
         userId: user.id,
     });
 
     return commission;
 }
+
+
 
 export async function commissionLogin(mail, password, res){
     const commission = await InternshipCommission.findOne({
@@ -40,7 +44,7 @@ export async function commissionLogin(mail, password, res){
     })
 
     if(commission) {
-        const isSame = commission.password === password;
+        const isSame = await bcrypt.compare(password.toString(), commission.password);
 
         if(isSame) {
             let token = jwt.sign({id: commission.userId}, process.env.SECRET_KEY, {
@@ -69,15 +73,14 @@ export async function commissionLogin(mail, password, res){
     }
 }
 
-export async function uploadDocument(filePath, fileName) {
-    try {
-        // Dosyayı oku
-        const fileData = fs.readFileSync(filePath);
 
+
+export async function uploadDocument(fileData, fileName) {
+    try {
         // Veritabanına dökümanı kaydet
         const document = await Document.create({
             fileName: fileName,
-            fileData: fileData
+            fileData: fileData,
         });
 
         return document;
@@ -85,4 +88,3 @@ export async function uploadDocument(filePath, fileName) {
         throw new Error('Döküman yüklenirken bir hata oluştu: ' + error.message);
     }
 }
-
