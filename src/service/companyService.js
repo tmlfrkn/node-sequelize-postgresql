@@ -3,6 +3,8 @@ import { User } from '../models/User.js';
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { InternshipCommission } from '../models/InternshipCommission.js';
+import { Announce } from '../models/Announce.js';
+
 
 export async function companySignUp(companyMail, password){
     const existingCompany = await Company.findOne({
@@ -67,5 +69,19 @@ export async function companyLogin(mail, password, res) {
         }
     }else {
         throw new Error('User not found');
+    }
+}
+
+export async function uploadDocument(fileData, fileName) {
+    try {
+        const document = await Announce.create({
+            fileName: fileName,
+            fileData: fileData,
+            status: false
+        });
+
+        return document;
+    } catch (error) {
+        throw new Error('Döküman yüklenirken bir hata oluştu: ' + error.message);
     }
 }

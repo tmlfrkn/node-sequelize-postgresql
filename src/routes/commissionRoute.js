@@ -48,6 +48,40 @@ router.post("/upload", upload.single('file'), async (req, res) => {
     }
 });
 
+// Route to download a file
+router.get("/download/:filename", async (req, res) => {
+    const filename = req.params.filename;
+    const filePath = `uploads/${filename}`;
+
+    res.download(filePath, (err) => {
+        if (err) {
+            res.status(500).json({ message: "Dosya indirilemedi.", error: err.message });
+        }
+    });
+});
+
+
+/*
+router.get("/viewDocuments", async (req, res) => {
+    try {
+        // Tüm belgeleri bul
+        const documents = await Document.findAll();
+
+        // Belgeleri istemciye gönder
+        
+        res.status(200).json(documents.map(doc => ({
+            ...doc,
+            downloadLink: `/download/${doc.fileName}`
+        })));
+        
+    } catch (error) {
+        // Hata durumunda istemciye hata mesajını gönder
+        res.status(500).json({ message: error.message });
+    }
+});
+*/
+
+
 router.get("/viewDocuments", async (req, res) => {
     try {
         // Tüm belgeleri bul

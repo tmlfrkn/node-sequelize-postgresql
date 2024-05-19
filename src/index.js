@@ -21,8 +21,8 @@ async function main() {
   app.use("/api/company", companyRoute);
   app.use("/api/commission", commissionRoute);
   app.use("/api/admin", adminRoute);
-  app.use('/api/documents', documentRoute)
-  app.use("/api", userRoute)
+  app.use('/api/documents', documentRoute);
+  app.use("/api", userRoute);
 
   try {
     await sequelize.sync({ force: false });
