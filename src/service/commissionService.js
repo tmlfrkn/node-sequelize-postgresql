@@ -88,3 +88,18 @@ export async function uploadDocument(fileData, fileName) {
         throw new Error('Döküman yüklenirken bir hata oluştu: ' + error.message);
     }
 }
+
+
+export async function deleteDocument(id) {
+    try {
+        const document = await Document.findByPk(id);
+        if (!document) {
+            throw new Error('Document not found');
+        }
+        await document.destroy();
+        return { message: 'Document deleted successfully' };
+    } catch (error) {
+        throw new Error('Error deleting document: ' + error.message);
+    }
+}
+
