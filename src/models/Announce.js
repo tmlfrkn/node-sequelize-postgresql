@@ -26,7 +26,7 @@ export const Announce = sequelize.define(
         allowNull: false,
         defaultValue: false,
       },
-      /*
+    
       companyId: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -34,7 +34,7 @@ export const Announce = sequelize.define(
           model: Company,
           key: 'id'
         }
-    }*/},
+    }},
     {
       timestamps: true,
     }

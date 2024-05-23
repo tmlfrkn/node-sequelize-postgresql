@@ -72,6 +72,31 @@ export async function companyLogin(mail, password, res) {
     }
 }
 
+export async function uploadDocument(fileData, fileName,userId) {
+    try {
+        // First, validate if the company exists
+        const companyId = await Company.findOne({
+            where: {
+                id: userId
+            },
+            attributes: ['id']
+        }
+        )
+        const document = await Announce.create({
+            fileName: fileName,
+            fileData: fileData,
+            status: false,
+            companyId: companyId // Set the company ID on the document
+        });
+
+        return document;
+    } catch (error) {
+        throw new Error('Error while uploading document: ' + error.message);
+    }
+}
+
+
+/*
 export async function uploadDocument(fileData, fileName) {
     try {
         const document = await Announce.create({
@@ -84,4 +109,4 @@ export async function uploadDocument(fileData, fileName) {
     } catch (error) {
         throw new Error('Döküman yüklenirken bir hata oluştu: ' + error.message);
     }
-}
+}*/

@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import * as CompanyService from '../service/companyService.js'
 import multer from "multer";
+import authenticate from "../middleware.js";
 
 const router = Router();
 // const upload = multer({ dest: 'uploads/' });
@@ -29,6 +30,24 @@ router.post("/register", async(req, res) => {
         return res.status(500).json({message: error.message})
     }
 });
+
+router.post("/upload", authenticate, upload.single('file'), async (req, res) => {
+    try {
+        const fileData = req.file.path;
+        const fileName = req.file.originalname;
+        const userId = req.userId;
+
+        const document = await CompanyService.uploadDocument(fileData, fileName, userId);
+
+        res.status(200).json({ message: 'Document successfully uploaded', document });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+
+
+/*
 router.post("/upload", upload.single('file'), async (req, res) => {
     try {
         
@@ -43,6 +62,6 @@ router.post("/upload", upload.single('file'), async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
-
+*/
 
 export default router;
