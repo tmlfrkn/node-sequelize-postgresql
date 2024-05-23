@@ -2,6 +2,7 @@ import { Student } from '../models/Student.js';
 import { User } from '../models/User.js';
 import { Document } from '../models/Document.js';
 import jwt from "jsonwebtoken";
+import summerPractiseForm from '../models/summerPractiseForm.js'; // Import the model
 
 
 export async function studentRegister(studentMail, studentId) {
@@ -70,5 +71,16 @@ export async function studentLogin(mail, password, res) {
         }
     }else {
         throw new Error('User not found');
+    }
+}
+
+
+export async function createSummerPracticeForm(data) {
+    try {
+        const newForm = await summerPractiseForm.create(data);
+        return newForm;
+    } catch (error) {
+        console.error("Failed to create summer practice form:", error);
+        throw new Error('Error creating summer practice form');
     }
 }

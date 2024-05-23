@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../db/database.js";
-
+import {Company} from "../models/Company.js"
 
 export const Announce = sequelize.define(
     "announce",
@@ -25,8 +25,16 @@ export const Announce = sequelize.define(
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false,
-      }
-    },
+      },
+      /*
+      companyId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: Company,
+          key: 'id'
+        }
+    }*/},
     {
       timestamps: true,
     }

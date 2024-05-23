@@ -69,6 +69,52 @@ router.get("/download/:filename", async (req, res) => {
 });
 
 
+router.post("/approve-application", authenticate, async (req, res) => {
+    const { studentId } = req.body;
+  
+    try {
+      await CommissionService.approveApplication(studentId);
+      res.status(200).json({ message: 'Application approved successfully.' });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  });
+  
+  // Başvuru reddetme route'u
+  router.post("/reject-application", authenticate, async (req, res) => {
+    const { studentId, feedback } = req.body;
+  
+    try {
+      await CommissionService.rejectApplication(studentId, feedback);
+      res.status(200).json({ message: 'Application rejected successfully.' });
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  });
+  
+  
+  // Pending documents endpoint'i
+  router.get("/documents/pending", authenticate, async (req, res) => {
+    try {
+        const pendingDocuments = await CommissionService.getPendingDocuments();
+        res.status(200).json({ pendingDocuments });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+  });
+  
+  // Belirli bir öğrenciye ait dökümanları getiren endpoint
+  router.get("/documents/:studentId", authenticate, async (req, res) => {
+    try {
+        const studentId = req.params.studentId;
+        const studentDocuments = await CommissionService.getStudentDocuments(studentId);
+        res.status(200).json({ studentDocuments });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+  });
+
+
 router.get("/viewDocuments", async (req, res) => {
     try {
         // Tüm belgeleri bul

@@ -1,5 +1,6 @@
 import { InternshipCommission } from "../models/InternshipCommission.js";
 import { User } from "../models/User.js";
+import { Student } from "../models/Student.js";
 import { Document } from "../models/Document.js";
 import jwt from "jsonwebtoken";
 import fs from "fs"
@@ -33,7 +34,66 @@ export async function commissionSignUp(commissionMail, password){
 
     return commission;
 }
-
+export async function approveApplication(studentId) {
+    try {
+      const student = await Student.findOne({ where: { studentId } });
+      if (!student) {
+        throw new Error('Student not found');
+      }
+  
+      student.approvalStatus = 'Approved';
+  
+      await student.save();
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+  
+  // Başvuru reddetme fonksiyonu
+  export async function rejectApplication(studentId, feedback) {
+    try {
+      const student = await Student.findOne({ where: { studentId } });
+      if (!student) {
+        throw new Error('Student not found');
+      }
+  
+      student.approvalStatus = 'Rejected';
+      student.feedback = feedback; // Feedback alanını ekledik
+      await student.save();
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  }
+  
+  // Bekleyen dökümanları getiren fonksiyon
+  export const getPendingDocuments = async () => {
+    try {
+        const pendingDocuments = await Document.findAll({
+            where: {
+                status: 'pending'
+            },
+            include: 'student' // Öğrenci bilgilerini de dahil edelim
+        });
+        return pendingDocuments;
+    } catch (error) {
+        throw new Error('Bekleyen dökümanlar alınırken bir hata oluştu: ' + error.message);
+    }
+  };
+  
+  // Belirli bir öğrenciye ait dökümanları getiren fonksiyon
+  export const getStudentDocuments = async (studentId) => {
+    try {
+        const studentDocuments = await Document.findAll({
+            where: {
+                studentId: studentId
+            },
+            include: 'student' // Öğrenci bilgilerini de dahil edelim
+        });
+        return studentDocuments;
+    } catch (error) {
+        throw new Error('Öğrenci dökümanları alınırken bir hata oluştu: ' + error.message);
+    }
+  };
 
 
 export async function commissionLogin(mail, password, res){
