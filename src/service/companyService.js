@@ -75,9 +75,9 @@ export async function companyLogin(mail, password, res) {
 export async function uploadDocument(fileData, fileName,userId) {
     try {
         // First, validate if the company exists
-        const companyId = await Company.findOne({
+        const company = await Company.findOne({
             where: {
-                id: userId
+                userId: userId
             },
             attributes: ['id']
         }
@@ -86,7 +86,7 @@ export async function uploadDocument(fileData, fileName,userId) {
             fileName: fileName,
             fileData: fileData,
             status: false,
-            companyId: companyId // Set the company ID on the document
+            companyId: company.id // Set the company ID on the document
         });
 
         return document;
