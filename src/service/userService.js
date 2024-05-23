@@ -5,6 +5,7 @@ import { commissionLogin } from "./commissionService.js";
 import { companyLogin } from "./companyService.js";
 import { studentLogin } from "./studentService.js";
 import { adminLogin } from "./adminService.js";
+import {deansLogin} from "./deansOfficeService.js"
 
 export async function login(mail, password, res) {
     const mailType = mail.slice(mail.indexOf("@") + 1);
@@ -15,7 +16,9 @@ export async function login(mail, password, res) {
         case "commission.com": 
             return await commissionLogin(mail.toString(), password.toString(),res);
         case "admin.com":
-            return await adminLogin(mail.toString(), password.toString(),res);        
+            return await adminLogin(mail.toString(), password.toString(),res);
+        case "deans.com":
+            return await deansLogin(mail.toString(), password.toString(),res);        
         default: 
             return await companyLogin(mail.toString(), password.toString(), res);
         

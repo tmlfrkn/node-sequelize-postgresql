@@ -11,20 +11,31 @@ export const DeansOffice = sequelize.define(
         unique: true,
         autoIncrement: true,
       },
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        defaultValue: null
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false
+      },
       deansMail: {
         type: DataTypes.STRING,
         allowNull: false
       },
       address: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true
       },
       phone: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: true
       }
     },
     {
       timestamps: true,
     }
   );
+
+  export default DeansOffice;

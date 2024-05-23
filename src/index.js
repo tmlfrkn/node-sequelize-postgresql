@@ -7,6 +7,7 @@ import companyRoute from "./routes/companyRoute.js";
 import userRoute from "./routes/userRoute.js";
 import commissionRoute from "./routes/commissionRoute.js";
 import documentRoute from "./routes/documentRoute.js";
+import deansOfficeRoute from "./routes/deansOfficeRoute.js";
 import adminRoute from "./routes/adminRoute.js"
 import cookieParser from 'cookie-parser';
 
@@ -16,6 +17,7 @@ async function main() {
   app.use(cookieParser());
 
   app.use("/api/projects", projectsRoutes);
+  app.use("/api/deansOffice", deansOfficeRoute);
   app.use("/api/workpackages", workpackagesRoutes);
   app.use("/api/student", studentRoute);
   app.use("/api/company", companyRoute);
