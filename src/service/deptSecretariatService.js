@@ -3,7 +3,7 @@ import { User } from '../models/User.js';
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { SSI } from "../models/SSI.js";
-
+import SummerPractiseForm from '../models/SummerPractiseForm.js';
 
 
 export async function deptSignUp(deptMail, password){
@@ -82,4 +82,14 @@ export async function uploadDocument(fileData, fileName,userId) {
     } catch (error) {
         throw new Error('Error while uploading document: ' + error.message);
     }
+}
+
+export async function viewApprovedSpaf(){
+    const spafs = await SummerPractiseForm.findAll({
+        where: {
+            status: true
+        }
+    })
+
+    return spafs;
 }

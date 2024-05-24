@@ -2,7 +2,7 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../db/database.js";
 import { Student } from './Student.js';
 
-export const summerPractiseForm = sequelize.define("summerPractiseForm", {
+export const SummerPractiseForm = sequelize.define("summerPractiseForm", {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -40,4 +40,4 @@ export const summerPractiseForm = sequelize.define("summerPractiseForm", {
     timestamps: true,
 });
 
-export default summerPractiseForm;
+export default SummerPractiseForm;

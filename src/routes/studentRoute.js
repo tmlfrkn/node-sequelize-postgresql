@@ -1,12 +1,12 @@
-// import { Router } from 'express';
-// import * as StudentService from "../service/studentService.js";
-// import multer from "multer";
-// import authenticate from "../middleware.js";
+import { Router } from 'express';
+import * as StudentService from "../service/studentService.js";
+import multer from "multer";
+import authenticate from "../middleware.js";
 
 
 // const router = Router();
 
-/*
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'uploads/');
@@ -23,7 +23,7 @@ const upload = multer({
 });
 
 
-
+/*
 router.post("/register", async (req, res) => {
     const { studentMail, studentId } = req.body;
     try{
@@ -91,11 +91,6 @@ router.get("/viewDocuments", async (req, res) => {
 
 */
 
-
-import { Router } from 'express';
-import * as StudentService from "../service/studentService.js";
-
-
 const router = Router();
 
 router.post("/register", async (req, res) => {
@@ -161,28 +156,20 @@ router.post("/sendForm", async (req, res) => {
 });
 
 
-// router.post("/uploadSpaf", authenticate, upload.single('file'), async (req, res) => {
-//     try {
-//         const fileData = req.file.path;
-//         const fileName = req.file.originalname;
-//         const userId = req.user.id;
+router.post("/uploadSpaf", authenticate, upload.single('file'), async (req, res) => {
+    try {
+        const fileData = req.file.path;
+        const fileName = req.file.originalname;
+        const userId = req.user.id;
 
-//         const spaf = await StudentService.uploadSpaf(fileData, fileName, userId);
+        const spaf = await StudentService.uploadSpaf(fileData, fileName, userId);
 
-//         res.status(200).json({ message: 'Document successfully uploaded', spaf });
-//     } catch (error) {
-//         res.status(500).json({ message: error.message });
-//     }
-// });
+        res.status(200).json({ message: 'Document successfully uploaded', spaf });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
 
-
-//         const spaf = await StudentService.uploadSpaf(fileData, fileName, userId);
-
-//         res.status(200).json({ message: 'Document successfully uploaded', spaf });
-//     } catch (error) {
-//         res.status(500).json({ message: error.message });
-//     }
-// });
 
 export default router;
 
