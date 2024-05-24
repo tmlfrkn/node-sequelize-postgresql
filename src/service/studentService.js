@@ -96,3 +96,26 @@ export async function uploadDocument(fileData, fileName,userId) {
         throw new Error('Error while uploading document: ' + error.message);
     }
 }
+
+export async function uploadSpaf(fileData, fileName, userId) {
+    try {
+        // Veritabanına dökümanı kaydet
+        const student = await Student.findOne({
+            where: {
+                userId
+            },
+            attributes: ['id', 'mail']
+        })
+
+        const spaf = await summerPractiseForm.create({
+            fileName: fileName,
+            fileData: fileData,
+            studentId: student.id,
+            studentMail: student.studentMail
+        });
+
+        return spaf;
+    } catch (error) {
+        throw new Error('Döküman yüklenirken bir hata oluştu: ' + error.message);
+    }
+}
