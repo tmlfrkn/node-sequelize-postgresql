@@ -22,10 +22,9 @@ export const SSI = sequelize.define(
         defaultValue: null
       },
       studentId: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: true,
-
-    }
+    }  
       },
     {
       timestamps: true,

@@ -1,6 +1,7 @@
 import { Student } from '../models/Student.js';
 import { User } from '../models/User.js';
 import { Document } from '../models/Document.js';
+import { StudentDocument } from '../models/StudentDocument.js';
 import jwt from "jsonwebtoken";
 import summerPractiseForm from '../models/summerPractiseForm.js'; // Import the model
 
@@ -73,14 +74,25 @@ export async function studentLogin(mail, password, res) {
         throw new Error('User not found');
     }
 }
-
-
-export async function createSummerPracticeForm(data) {
+export async function uploadDocument(fileData, fileName,userId) {
     try {
-        const newForm = await summerPractiseForm.create(data);
-        return newForm;
+        // First, validate if the company exists
+        const student = await Student.findOne({
+            where: {
+                userId: userId
+            },
+            attributes: ['id']
+        }
+        )
+        const document = await StudentDocument.create({
+            fileName: fileName,
+            fileData: fileData,
+            status: false,
+            studentId: student.id // Set the company ID on the document
+        });
+
+        return document;
     } catch (error) {
-        console.error("Failed to create summer practice form:", error);
-        throw new Error('Error creating summer practice form');
+        throw new Error('Error while uploading document: ' + error.message);
     }
 }

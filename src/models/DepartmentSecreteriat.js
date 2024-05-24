@@ -2,8 +2,8 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../db/database.js";
 
 
-export const DepartmentSecretariat = sequelize.define(
-    "department_secretariat",
+export const DepartmentSecreteriat = sequelize.define(
+    "department_secreteriat",
     {
       id: {
         type: DataTypes.INTEGER,
@@ -15,16 +15,27 @@ export const DepartmentSecretariat = sequelize.define(
         type: DataTypes.STRING,
         allowNull: false
       },
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        defaultValue: null
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: true
+      },
       address: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: true
       },
       phone: {
         type: DataTypes.STRING,
-        allowNull: false
-      }
+        allowNull: true
+      },
+
     },
     {
       timestamps: true,
     }
   );
+

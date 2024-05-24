@@ -3,6 +3,7 @@ import { sequelize } from "./db/database.js";
 import projectsRoutes from "./routes/projects.routes.js";
 import workpackagesRoutes from "./routes/workpackages.routes.js";
 import studentRoute from "./routes/studentRoute.js";
+import deptSecretariatRoute from "./routes/deptSecretariatRoute.js"
 import companyRoute from "./routes/companyRoute.js";
 import userRoute from "./routes/userRoute.js";
 import commissionRoute from "./routes/commissionRoute.js";
@@ -23,6 +24,7 @@ async function main() {
   app.use("/api/company", companyRoute);
   app.use("/api/commission", commissionRoute);
   app.use("/api/admin", adminRoute);
+  app.use("/api/deptSecretariat", deptSecretariatRoute);
   app.use('/api/documents', documentRoute);
   app.use("/api", userRoute);
 
