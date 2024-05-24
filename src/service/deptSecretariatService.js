@@ -83,13 +83,3 @@ export async function uploadDocument(fileData, fileName,userId) {
         throw new Error('Error while uploading document: ' + error.message);
     }
 }
-
-export async function viewApprovedSpaf(){
-    const spafs = await SummerPractiseForm.findAll({
-        where: {
-            status: true
-        }
-    })
-
-    return spafs;
-}

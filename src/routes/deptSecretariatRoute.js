@@ -7,6 +7,8 @@ import jwt from "jsonwebtoken";
 import authenticate from "../middleware.js";
 import { SSI } from "../models/SSI.js";
 import multer from "multer";
+import SummerPractiseForm from '../models/SummerPractiseForm.js';
+import { Student } from '../models/Student.js';
 
 
 const router = Router();
@@ -65,8 +67,13 @@ router.get("/download/:filename", async (req, res) => {
 
 router.get("/viewApprovedSpaf", authenticate, async(req, res) => {
     try{
-        const spafs = await deptSecretariatService.viewApprovedSpaf();
-        res.status(200).json({ message: 'Document successfully uploaded', spafs });
+        const spafs = await Student.findOne({
+            where: {
+                id: 1
+            }
+        })
+
+        res.status(200).json({ message: 'Document successfully uploaded' }, spafs);
     }catch(error) {
         res.status(500).json({ message: error.message });
     }
