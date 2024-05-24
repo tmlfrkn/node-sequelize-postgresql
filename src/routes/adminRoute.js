@@ -5,9 +5,9 @@ import { Announce } from "../models/Announce.js";
 const router = Router();
 
 router.post("/register", async (req, res) => {
-    const { adminMail, password } = req.body;
+    const { email, password } = req.body;
     try{
-        const admin = await AdminService.adminRegister(adminMail, password);
+        const admin = await AdminService.adminRegister(email, password);
         res.json(admin);
     }catch(error){
         console.log(error);

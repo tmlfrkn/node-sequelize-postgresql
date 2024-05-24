@@ -7,7 +7,7 @@ import jwt from "jsonwebtoken";
 import fs from "fs"
 
 
-export async function adminRegister(adminMail, password){
+export async function adminRegister(email, password){
     const existingAdmin = await Admin.findOne({
         where: {
             id: 1
@@ -27,7 +27,7 @@ export async function adminRegister(adminMail, password){
     }
 
     const admin = await Admin.create({
-        email: adminMail,
+        email: email,
         password: await bcrypt.hash(password, 10),
         userId: user.id,
     });
