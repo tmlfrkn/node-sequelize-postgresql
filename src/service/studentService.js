@@ -3,7 +3,7 @@ import { User } from '../models/User.js';
 import { Document } from '../models/Document.js';
 import { StudentDocument } from '../models/StudentDocument.js';
 import jwt from "jsonwebtoken";
-import SummerPractiseForm from '../models/SummerPractiseForm.js'; // Import the model
+import Spaf from '../models/Spaf.js';
 
 
 export async function studentRegister(studentMail, studentId) {
@@ -107,7 +107,7 @@ export async function uploadSpaf(fileData, fileName, userId) {
             attributes: ['id', 'studentMail']
         })
 
-        const spaf = await SummerPractiseForm.create({
+        const spaf = await Spaf.create({
             fileName: fileName,
             fileData: fileData,
             studentId: student.id,

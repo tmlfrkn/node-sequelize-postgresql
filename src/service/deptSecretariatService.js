@@ -3,7 +3,6 @@ import { User } from '../models/User.js';
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { SSI } from "../models/SSI.js";
-import SummerPractiseForm from '../models/SummerPractiseForm.js';
 
 
 export async function deptSignUp(deptMail, password){
