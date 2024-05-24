@@ -5,6 +5,7 @@ import { Document } from "../models/Document.js";
 import jwt from "jsonwebtoken";
 import fs from "fs"
 import bcrypt from "bcrypt";
+import Spaf from "../models/Spaf.js";
 
 
 export async function commissionSignUp(commissionMail, password){
@@ -40,7 +41,15 @@ export async function approveApplication(studentId) {
       if (!student) {
         throw new Error('Student not found');
       }
-  
+      
+      const spaf = await Spaf.findOne({
+        where: {
+            studentId: student.id
+        }
+      });
+
+      spaf.status = true;
+
       student.approvalStatus = 'Approved';
   
       await student.save();
@@ -57,6 +66,14 @@ export async function approveApplication(studentId) {
         throw new Error('Student not found');
       }
   
+      const spaf = await Spaf.findOne({
+        where: {
+            studentId: student.id
+        }
+      });
+
+      spaf.status = false;
+
       student.approvalStatus = 'Rejected';
       student.feedback = feedback; // Feedback alanını ekledik
       await student.save();
