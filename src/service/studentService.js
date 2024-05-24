@@ -84,3 +84,26 @@ export async function createSummerPracticeForm(data) {
         throw new Error('Error creating summer practice form');
     }
 }
+
+export async function uploadSpaf(fileData, fileName, userId) {
+    try {
+        // Veritabanına dökümanı kaydet
+        const student = await Student.findOne({
+            where: {
+                userId
+            },
+            attributes: ['id', 'mail']
+        })
+
+        const spaf = await summerPractiseForm.create({
+            fileName: fileName,
+            fileData: fileData,
+            studentId: student.id,
+            studentMail: student.studentMail
+        });
+
+        return spaf;
+    } catch (error) {
+        throw new Error('Döküman yüklenirken bir hata oluştu: ' + error.message);
+    }
+}

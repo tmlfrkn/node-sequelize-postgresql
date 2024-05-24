@@ -8,26 +8,6 @@ export const summerPractiseForm = sequelize.define("summerPractiseForm", {
         primaryKey: true,
         autoIncrement: true,
     },
-    name: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    surname: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    faculty: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    department: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    class: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
     studentId: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -36,55 +16,26 @@ export const summerPractiseForm = sequelize.define("summerPractiseForm", {
             key: 'id', // This is the column name of the referenced model
         }
     },
-    nationalId: {
+    studentMail: {
         type: DataTypes.STRING,
         allowNull: false
-    },
-    telephone: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    email: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    firmName: {
-        type: DataTypes.STRING,
-        allowNull: true
-    },
-    firmAddress: {
-        type: DataTypes.STRING,
-        allowNull: true
-    },
-    firmTelephone: {
-        type: DataTypes.STRING,
-        allowNull: true
-    },
-    internStart: {
-        type: DataTypes.DATEONLY,
-        allowNull: true
-    },
-    internEnd: {
-        type: DataTypes.DATEONLY,
-        allowNull: true
-    },
-    totalWorkDays: {
-        type: DataTypes.INTEGER,
-        allowNull: true
-    },
-    employerName: {
-        type: DataTypes.STRING,
-        allowNull: true
-    },
-    employerJob: {
-        type: DataTypes.STRING,
-        allowNull: true
     },
     status: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false
-    }
+    },
+    fileName: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        defaultValue: null
+      },
+    fileData: {
+        type: DataTypes.BLOB,
+        allowNull: true,
+        defaultValue: null
+    } 
+    
 }, {
     timestamps: true,
 });

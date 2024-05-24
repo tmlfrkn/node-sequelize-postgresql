@@ -66,5 +66,20 @@ router.post("/sendForm", async (req, res) => {
     }
 });
 
+
+// router.post("/uploadSpaf", authenticate, upload.single('file'), async (req, res) => {
+//     try {
+//         const fileData = req.file.path;
+//         const fileName = req.file.originalname;
+//         const userId = req.user.id;
+
+//         const spaf = await StudentService.uploadSpaf(fileData, fileName, userId);
+
+//         res.status(200).json({ message: 'Document successfully uploaded', spaf });
+//     } catch (error) {
+//         res.status(500).json({ message: error.message });
+//     }
+// });
+
 export default router;
 
