@@ -72,7 +72,7 @@ export async function companyLogin(mail, password, res) {
     }
 }
 
-export async function uploadDocument(fileData, fileName,userId) {
+export async function uploadDocument(fileData, fileName, userId) {
     try {
         // First, validate if the company exists
         const company = await Company.findOne({

@@ -31,16 +31,33 @@ router.post("/register", async(req, res) => {
     }
 });
 
-router.post("/upload", authenticate, upload.single('file'), async (req, res) => {
+// router.post("/upload", authenticate, upload.single('file'), async (req, res) => {
+//     try {
+//         const fileData = req.file.path;
+//         const fileName = req.file.originalname;
+//         const userId = req.user.id;
+
+
+//         const document = await CompanyService.uploadDocument(fileData, fileName, userId);
+
+//         res.status(200).json({ message: 'Document successfully uploaded', document });
+//     } catch (error) {
+//         res.status(500).json({ message: error.message });
+//     }
+// });
+
+router.post("/upload", upload.array('files'), async (req, res) => {
+    if (!req.files || req.files.length === 0) {
+        return res.status(400).json({ message: 'Dosya yüklenemedi.' });
+    }
+
     try {
-        const fileData = req.file.path;
-        const fileName = req.file.originalname;
         const userId = req.user.id;
 
-
-        const document = await CompanyService.uploadDocument(fileData, fileName, userId);
-
-        res.status(200).json({ message: 'Document successfully uploaded', document });
+        const documents = await Promise.all(
+            req.files.map(file => CompanyService.uploadDocument(file.buffer, file.originalname, userId))
+        );
+        res.status(200).json({ message: 'Dökümanlar başarıyla yüklendi', documents });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
