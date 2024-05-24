@@ -1,8 +1,8 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../db/database.js";
-import { Student } from "./Student.js";
+import { Student } from "../models/Student.js";
 
-export const Document = sequelize.define(
+export const StudentDocument = sequelize.define(
     "student_document",
     {
       id: {
@@ -21,17 +21,20 @@ export const Document = sequelize.define(
         allowNull: true,
         defaultValue: null
       },
-      // Yeni eklenen studentId alanı
+      status: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
       studentId: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: false,
         references: {
           model: Student,
-          key: 'studentId' // Düzeltildi
+          key: 'studentId'
         }
-      }
-    },
+    }},
     {
       timestamps: true,
     }
-);
+  );
