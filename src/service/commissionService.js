@@ -3,10 +3,10 @@ import { User } from "../models/User.js";
 import { Student } from "../models/Student.js";
 import { Document } from "../models/Document.js";
 import jwt from "jsonwebtoken";
-import fs from "fs"
 import bcrypt from "bcrypt";
 import Spaf from "../models/Spaf.js";
 import CompanySpaf from "../models/CompanySpaf.js";
+import SSI from "../models/SSI.js";
 
 
 export async function commissionSignUp(commissionMail, password){
@@ -36,7 +36,7 @@ export async function commissionSignUp(commissionMail, password){
 
     return commission;
 }
-export async function approveApplication(companySpafId) {
+export async function approveApplication(fileData, fileName, companySpafId) {
     try {
         
         const companySpaf = await CompanySpaf.findOne({
@@ -56,14 +56,22 @@ export async function approveApplication(companySpafId) {
           throw new Error('Student not found');
         }
 
-      companySpaf.status = true;
-      spaf.status = true;
+        
+        companySpaf.status = true;
+        spaf.status = true;
+        
+        student.approvalStatus = 'Approved';
+        
+        await spaf.save();
+        await companySpaf.save();
+        await student.save();
 
-      student.approvalStatus = 'Approved';
-  
-      await spaf.save();
-      await companySpaf.save();
-      await student.save();
+        await SSI.create({
+            fileName,
+            fileData,
+            studentId: student.id,
+            studentMail: student.studentMail
+        })
 
     } catch (error) {
       throw new Error(error.message);

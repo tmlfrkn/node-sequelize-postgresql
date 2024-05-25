@@ -181,6 +181,19 @@ router.get("/viewSpafs", authenticate, async (req, res) => {
     }
 })
 
+router.get("/viewSsi", authenticate, async (req, res) => {
+    try{
+        const userId = req.user.id;
+
+        const ssi = await StudentService.viewSSI(userId);
+
+        res.status(200).json({ message: 'SSI viewed', ssi });
+
+    }catch(error){
+        res.status(500).json({message: error.message});
+    }
+})
+
 
 export default router;
 

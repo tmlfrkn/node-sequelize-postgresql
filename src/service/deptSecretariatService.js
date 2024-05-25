@@ -82,3 +82,9 @@ export async function uploadDocument(fileData, fileName,userId) {
         throw new Error('Error while uploading document: ' + error.message);
     }
 }
+
+export async function viewSsis() {
+    const ssis = await SSI.findAll();
+
+    return ssis;
+}

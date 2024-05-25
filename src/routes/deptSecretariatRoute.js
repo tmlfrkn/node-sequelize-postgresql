@@ -78,4 +78,15 @@ router.get("/viewApprovedSpaf", authenticate, async(req, res) => {
         res.status(500).json({ message: error.message });
     }
 })
+
+router.get("/viewSsis", authenticate, async (req, res) => {
+    try{
+        const ssis = await deptSecretariatService.viewSsis();
+        res.status(200).json({ message: 'Ssis viewed', ssis });
+        
+    }catch(error){
+        res.status(500).json({ message: error.message });
+    }
+})
+
 export default router;

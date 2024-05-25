@@ -25,8 +25,22 @@ const upload = multer({
 */
 
 
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+// const storage = multer.memoryStorage();
+// const upload = multer({ storage: storage });
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/');
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname);
+    }
+});
+
+const upload = multer({ 
+    storage: storage,
+    limits: { fileSize: 1024 * 1024 * 10 } // 10 MB dosya boyutu sınırı
+});
 
 
 router.post("/upload", upload.array('files'), async (req, res) => {
@@ -69,11 +83,14 @@ router.get("/download/:filename", async (req, res) => {
 });
 
 
-router.post("/approve-application", authenticate, async (req, res) => {
+router.post("/approve-application", authenticate, upload.single('file'), async (req, res) => {
+    const fileData = req.file.path;
+    const fileName = req.file.originalname;
     const { companySpafId } = req.body;
-  
+
     try {
-      await CommissionService.approveApplication(companySpafId);
+
+      await CommissionService.approveApplication(fileData, fileName, companySpafId);
       res.status(200).json({ message: 'Application approved successfully.' });
     } catch (error) {
       res.status(500).json({ message: error.message });

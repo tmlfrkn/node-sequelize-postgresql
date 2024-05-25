@@ -5,6 +5,7 @@ import { StudentDocument } from '../models/StudentDocument.js';
 import { CompanySpaf } from '../models/CompanySpaf.js';
 import jwt from "jsonwebtoken";
 import Spaf from '../models/Spaf.js';
+import SSI from '../models/SSI.js';
 
 
 export async function studentRegister(studentMail, studentId) {
@@ -142,4 +143,24 @@ export async function viewSpafs(userId){
     });
 
     return companySpafs;
+}
+
+export async function viewSSI(userId) {
+    const student = await Student.findOne({
+        where: {
+            userId
+        }
+    });
+
+    if(!student){
+        throw new Error('Student not found')
+    }
+
+    const ssi = await SSI.findOne({
+        where: {
+            studentMail: student.studentMail
+        }
+    });
+
+    return ssi;
 }
