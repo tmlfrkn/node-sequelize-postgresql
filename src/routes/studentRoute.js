@@ -173,9 +173,9 @@ router.get("/viewSpafs", authenticate, async (req, res) => {
     try{
         const userId = req.user.id;
 
-        const studentSpafs = await StudentService.viewSpafs(userId);
+        const companySpafs = await StudentService.viewSpafs(userId);
 
-        res.status(200).json({ message: 'Documents successfully viewed' }, studentSpafs)
+        res.status(200).json({ message: 'Document successfully viewed', companySpafs });
     }catch(error){
         res.status(500).json({message: error.message});
     }
