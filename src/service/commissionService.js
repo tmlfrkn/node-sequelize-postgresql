@@ -36,7 +36,7 @@ export async function commissionSignUp(commissionMail, password){
 
     return commission;
 }
-export async function approveApplication(fileData, fileName, companySpafId) {
+export async function approveApplication(companySpafId) {
     try {
         
         const companySpaf = await CompanySpaf.findOne({
@@ -67,8 +67,7 @@ export async function approveApplication(fileData, fileName, companySpafId) {
         await student.save();
 
         await SSI.create({
-            fileName,
-            fileData,
+            fileName: student.studentMail + "_ssi.pdf",
             studentId: student.id,
             studentMail: student.studentMail
         })

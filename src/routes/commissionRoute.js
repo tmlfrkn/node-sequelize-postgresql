@@ -83,14 +83,13 @@ router.get("/download/:filename", async (req, res) => {
 });
 
 
-router.post("/approve-application", authenticate, upload.single('file'), async (req, res) => {
-    const fileData = req.file.path;
-    const fileName = req.file.originalname;
+router.post("/approve-application", authenticate, async (req, res) => {
+
     const { companySpafId } = req.body;
 
     try {
 
-      await CommissionService.approveApplication(fileData, fileName, companySpafId);
+      await CommissionService.approveApplication(companySpafId);
       res.status(200).json({ message: 'Application approved successfully.' });
     } catch (error) {
       res.status(500).json({ message: error.message });
