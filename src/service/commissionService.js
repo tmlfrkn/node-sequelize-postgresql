@@ -36,24 +36,25 @@ export async function commissionSignUp(commissionMail, password){
 
     return commission;
 }
-export async function approveApplication(studentId) {
+export async function approveApplication(companySpafId) {
     try {
-      const student = await Student.findOne({ where: { id: studentId } });
-      if (!student) {
-        throw new Error('Student not found');
-      }
-      
-      const companySpaf = await CompanySpaf.findOne({
-        where: {
-            studentId: student.id
-        }
-      });
+        
+        const companySpaf = await CompanySpaf.findOne({
+            where: {
+                id: companySpafId
+            }
+        });
+        
+        const spaf = await Spaf.findOne({
+            where: {
+                companyMail: companySpaf.companyMail
+            }
+        })
 
-      const spaf = await Spaf.findOne({
-        where: {
-            studentId: student.id
+        const student = await Student.findOne({ where: { studentMail: companySpaf.studentMail } });
+        if (!student) {
+          throw new Error('Student not found');
         }
-      })
 
       companySpaf.status = true;
       spaf.status = true;

@@ -70,10 +70,10 @@ router.get("/download/:filename", async (req, res) => {
 
 
 router.post("/approve-application", authenticate, async (req, res) => {
-    const { studentId } = req.body;
+    const { companySpafId } = req.body;
   
     try {
-      await CommissionService.approveApplication(studentId);
+      await CommissionService.approveApplication(companySpafId);
       res.status(200).json({ message: 'Application approved successfully.' });
     } catch (error) {
       res.status(500).json({ message: error.message });
