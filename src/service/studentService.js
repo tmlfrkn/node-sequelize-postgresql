@@ -2,6 +2,7 @@ import { Student } from '../models/Student.js';
 import { User } from '../models/User.js';
 import { Document } from '../models/Document.js';
 import { StudentDocument } from '../models/StudentDocument.js';
+import { CompanySpaf } from '../models/CompanySpaf.js';
 import jwt from "jsonwebtoken";
 import Spaf from '../models/Spaf.js';
 
@@ -120,4 +121,25 @@ export async function uploadSpaf(fileData, fileName, userId, companyMail) {
     } catch (error) {
         throw new Error('Döküman yüklenirken bir hata oluştu: ' + error.message);
     }
+}
+
+export async function viewSpafs(userId){
+
+    const student = await Student.findOne({
+        where: {
+            userId
+        }
+    });
+
+    if(!student){
+        throw new Error('Student not found');
+    }
+
+    const companySpafs = await CompanySpaf.findAll({
+        where: {
+            studentMail: student.studentMail
+        }
+    });
+
+    return companySpafs;
 }

@@ -129,8 +129,6 @@ router.get("/download/:filename", async (req, res) => {
 });
 
 
-
-
 router.get("/viewDocuments", async (req, res) => {
     try {
         // Tüm belgeleri bul
@@ -170,6 +168,18 @@ router.post("/uploadSpaf", authenticate, upload.single('file'), async (req, res)
         res.status(500).json({ message: error.message });
     }
 });
+
+router.get("/viewSpafs", authenticate, async (req, res) => {
+    try{
+        const userId = req.user.id;
+
+        const studentSpafs = await StudentService.viewSpafs(userId);
+
+        res.status(200).json({ message: 'Documents successfully viewed' }, studentSpafs)
+    }catch(error){
+        res.status(500).json({message: error.message});
+    }
+})
 
 
 export default router;
