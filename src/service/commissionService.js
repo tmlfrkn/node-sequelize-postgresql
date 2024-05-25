@@ -71,26 +71,27 @@ export async function approveApplication(companySpafId) {
   }
   
   // Başvuru reddetme fonksiyonu
-  export async function rejectApplication(studentId, feedback) {
+  export async function rejectApplication(companySpafId, feedback) {
     try {
-      const student = await Student.findOne({ where: { id: studentId } });
+
+        const companySpaf = await CompanySpaf.findOne({
+          where: {
+              id: companySpafId
+          }
+        });
+  
+        const spaf = await Spaf.findOne({
+          where: {
+            companyMail: companySpaf.companyMail
+          }
+        })
+
+        const student = await Student.findOne({ where: { studentMail: companySpaf.studentMail } });
+        
       if (!student) {
         throw new Error('Student not found');
       }
   
-      const companySpaf = await CompanySpaf.findOne({
-        where: {
-            studentId,
-            status: false
-        }
-      });
-
-      const spaf = await Spaf.findOne({
-        where: {
-            studentId,
-            status: false
-        }
-      })
 
       spaf.feedback = feedback;
       spaf.status = false;

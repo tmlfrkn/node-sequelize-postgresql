@@ -81,11 +81,13 @@ router.post("/approve-application", authenticate, async (req, res) => {
   });
   
   // Başvuru reddetme route'u
-  router.post("/reject-application", authenticate, async (req, res) => {
-    const { studentId, feedback } = req.body;
+  router.post("/reject-application/:companySpafId", authenticate, async (req, res) => {
+    const { feedback } = req.body;
+
+    const { companySpafId } = req.params.companySpafId;
   
     try {
-      await CommissionService.rejectApplication(studentId, feedback);
+      await CommissionService.rejectApplication(companySpafId, feedback);
       res.status(200).json({ message: 'Application rejected successfully.' });
     } catch (error) {
       res.status(500).json({ message: error.message });
