@@ -161,8 +161,9 @@ router.post("/uploadSpaf", authenticate, upload.single('file'), async (req, res)
         const fileData = req.file.path;
         const fileName = req.file.originalname;
         const userId = req.user.id;
+        const companyMail = req.body.companyMail
 
-        const spaf = await StudentService.uploadSpaf(fileData, fileName, userId);
+        const spaf = await StudentService.uploadSpaf(fileData, fileName, userId, companyMail);
 
         res.status(200).json({ message: 'Document successfully uploaded', spaf });
     } catch (error) {

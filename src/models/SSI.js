@@ -24,7 +24,11 @@ export const SSI = sequelize.define(
       studentId: {
         type: DataTypes.STRING,
         allowNull: true,
-    }  
+      },
+      studentMail: {
+        type: DataTypes.STRING,
+        allowNull: false
+      }  
       },
     {
       timestamps: true,

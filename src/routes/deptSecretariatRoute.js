@@ -67,9 +67,9 @@ router.get("/download/:filename", async (req, res) => {
 
 router.get("/viewApprovedSpaf", authenticate, async(req, res) => {
     try{
-        const spafs = await Spaf.findOne({
+        const spafs = await Spaf.findAll({
             where: {
-                id: 1
+                status: true
             }
         })
 

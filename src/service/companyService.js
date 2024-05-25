@@ -4,6 +4,8 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { InternshipCommission } from '../models/InternshipCommission.js';
 import { Announce } from '../models/Announce.js';
+import Spaf from '../models/Spaf.js';
+import CompanySpaf from '../models/CompanySpaf.js';
 
 
 export async function companySignUp(companyMail, password){
@@ -95,18 +97,52 @@ export async function uploadDocument(fileData, fileName, userId) {
     }
 }
 
+export async function viewSpafs(userId) {
+    const company = await Company.findOne({
+        where: {
+            userId
+        }
+    })
 
-/*
-export async function uploadDocument(fileData, fileName) {
-    try {
-        const document = await Announce.create({
-            fileName: fileName,
-            fileData: fileData,
-            status: false
-        });
-
-        return document;
-    } catch (error) {
-        throw new Error('Döküman yüklenirken bir hata oluştu: ' + error.message);
+    if(!company) {
+        throw new Error('Company not found');
     }
-}*/
+
+    const spafs = await Spaf.findAll({
+        where: {
+            companyMail: company.email
+        }
+    })
+
+    return spafs;
+}
+
+export async function uploadCompanySpaf(fileData, fileName, userId, studentMail){
+
+    const company = await Company.findOne({
+        where: {
+            userId: userId
+        },
+    });
+
+    const spaf = await Spaf.findOne({
+        where: {
+            studentMail,
+            companyMail: company.email
+        }
+    })
+
+    const companySpaf = await CompanySpaf.create({
+        fileName: fileName,
+        fileData: fileData,
+        studentId: spaf.studentId,
+        studentMail: spaf.studentMail,
+        feedback: spaf.feedback,
+        companyMail: spaf.companyMail,
+        companyName: company.companyName,
+        address: company.address,
+        phone: company.phone
+    });
+
+    return companySpaf;
+}

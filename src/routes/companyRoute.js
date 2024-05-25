@@ -46,5 +46,30 @@ router.post("/upload", authenticate, upload.single('file'), async (req, res) => 
     }
 });
 
+router.get("/viewStudentSpafs", authenticate, upload.single('file'), async(req, res) => {
+    try{
+        const userId = req.user.id;
+
+        const spafs = await CompanyService.viewSpafs(userId);
+        res.status(200).json({ message: 'Spafs successfully viewed', spafs });
+    }catch(error){
+        res.status(500).json({ message: error.message });
+    }
+})
+
+router.post("/uploadCompanySpaf", authenticate, upload.single('file'), async (req, res) => {
+    try{
+        const fileData = req.file.path;
+        const fileName = req.file.originalname;
+        const userId = req.user.id;
+        const studentMail = req.body.studentMail;
+
+        const companySpaf = await CompanyService.uploadCompanySpaf(fileData, fileName, userId, studentMail);
+
+        res.status(200).json({ message: 'Spafs successfully uploaded', companySpaf });
+    }catch(error) {
+        res.status(500).json({ message: error.message });
+    }
+})
 
 export default router;

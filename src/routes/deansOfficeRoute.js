@@ -3,6 +3,7 @@ import * as deansOfficeService from "../service/deansOfficeService.js";
 import { DeansOffice } from '../models/DeansOffice.js';
 import authenticate from "../middleware.js";
 import multer from "multer";
+import CompanySpaf from '../models/CompanySpaf.js';
 
 const router = Router();
 
@@ -68,7 +69,7 @@ router.get("/viewAnnouncements", async (req, res) => {
 router.get("/viewApprovedDocuments", async (req, res) => {
     try {
         // Tüm belgeleri bul
-        const announces = await Announce.findAll();
+        const approvedSpafs = await CompanySpaf.findAll();
 
         // Belgeleri istemciye gönder
         res.status(200).json(announces);
@@ -83,11 +84,11 @@ router.post("/upload", authenticate, upload.single('file'), async (req, res) => 
     try {
         const fileData = req.file.path;
         const fileName = req.file.originalname;
-        const studentId = 1;//bu değiştirilecek
+        const studentMail = req.body.studentMail;//bu değiştirilecek
         const userId = req.user.id;
 
 
-        const document = await deansOfficeService.uploadDocument(fileData, fileName, userId,studentId);
+        const document = await deansOfficeService.uploadDocument(fileData, fileName, userId, studentMail);
 
         res.status(200).json({ message: 'Document successfully uploaded', document });
     } catch (error) {

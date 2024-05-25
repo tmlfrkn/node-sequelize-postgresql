@@ -97,7 +97,7 @@ export async function uploadDocument(fileData, fileName,userId) {
     }
 }
 
-export async function uploadSpaf(fileData, fileName, userId) {
+export async function uploadSpaf(fileData, fileName, userId, companyMail) {
     try {
         // Veritabanına dökümanı kaydet
         const student = await Student.findOne({
@@ -111,7 +111,9 @@ export async function uploadSpaf(fileData, fileName, userId) {
             fileName: fileName,
             fileData: fileData,
             studentId: student.id,
-            studentMail: student.studentMail
+            studentMail: student.studentMail,
+            feedback: null,
+            companyMail
         });
 
         return spaf;

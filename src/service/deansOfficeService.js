@@ -62,18 +62,19 @@ export async function deansLogin(mail, password, res) {
     }
 }
 
-export async function uploadDocument(fileData, fileName,userId,studentId) {
+export async function uploadDocument(fileData, fileName,userId,studentMail) {
     try {
         const deans_office = await DeansOffice.findOne({
             where: {
                 userId: userId
             }
         })
+
         if(deans_office){
             const ssi = await SSI.create({
             fileName: fileName,
             fileData: fileData,
-            studentId: studentId
+            studentMail
             
         });
         return ssi;

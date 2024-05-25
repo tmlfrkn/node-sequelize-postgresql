@@ -1,8 +1,8 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from "../db/database.js";
 
-export const Spaf = sequelize.define(
-    "spaf",
+export const CompanySpaf = sequelize.define(
+    "companySpaf",
     {
         id: {
             type: DataTypes.INTEGER,
@@ -37,6 +37,20 @@ export const Spaf = sequelize.define(
         companyMail: {
             type: DataTypes.STRING,
             allowNull: false
+        },
+        companyName: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        address: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            defaultValue: null
+        },
+        phone: {
+            type: DataTypes.STRING,
+            allowNull: true,
+            defaultValue: null
         }
     },
     {
@@ -44,4 +58,4 @@ export const Spaf = sequelize.define(
     }
 )
 
-export default Spaf;
+export default CompanySpaf;

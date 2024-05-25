@@ -6,6 +6,7 @@ import jwt from "jsonwebtoken";
 import fs from "fs"
 import bcrypt from "bcrypt";
 import Spaf from "../models/Spaf.js";
+import CompanySpaf from "../models/CompanySpaf.js";
 
 
 export async function commissionSignUp(commissionMail, password){
@@ -37,22 +38,32 @@ export async function commissionSignUp(commissionMail, password){
 }
 export async function approveApplication(studentId) {
     try {
-      const student = await Student.findOne({ where: { studentId } });
+      const student = await Student.findOne({ where: { id: studentId } });
       if (!student) {
         throw new Error('Student not found');
       }
       
-      const spaf = await Spaf.findOne({
+      const companySpaf = await CompanySpaf.findOne({
         where: {
             studentId: student.id
         }
       });
 
+      const spaf = await Spaf.findOne({
+        where: {
+            studentId: student.id
+        }
+      })
+
+      companySpaf.status = true;
       spaf.status = true;
 
       student.approvalStatus = 'Approved';
   
+      await spaf.save();
+      await companySpaf.save();
       await student.save();
+
     } catch (error) {
       throw new Error(error.message);
     }
@@ -61,22 +72,33 @@ export async function approveApplication(studentId) {
   // Başvuru reddetme fonksiyonu
   export async function rejectApplication(studentId, feedback) {
     try {
-      const student = await Student.findOne({ where: { studentId } });
+      const student = await Student.findOne({ where: { id: studentId } });
       if (!student) {
         throw new Error('Student not found');
       }
   
-      const spaf = await Spaf.findOne({
+      const companySpaf = await CompanySpaf.findOne({
         where: {
-            studentId: student.id
+            studentId,
+            status: false
         }
       });
 
-      spaf.status = false;
+      const spaf = await Spaf.findOne({
+        where: {
+            studentId,
+            status: false
+        }
+      })
 
-      student.approvalStatus = 'Rejected';
-      student.feedback = feedback; // Feedback alanını ekledik
-      await student.save();
+      spaf.feedback = feedback;
+      spaf.status = false;
+      companySpaf.status = false;
+      companySpaf.feedback = feedback;
+      
+      await spaf.save();
+      await companySpaf.save();
+
     } catch (error) {
       throw new Error(error.message);
     }
@@ -178,5 +200,15 @@ export async function deleteDocument(id) {
     } catch (error) {
         throw new Error('Error deleting document: ' + error.message);
     }
+}
+
+export async function viewSpafs(){
+    const companySpafs = await CompanySpaf.findAll({
+        where: {
+            status: false
+        }
+    });
+
+    return companySpafs;
 }
 

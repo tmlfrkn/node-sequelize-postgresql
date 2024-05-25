@@ -128,6 +128,15 @@ router.get("/viewDocuments", async (req, res) => {
     }
 });
 
+router.get("/viewSpafs", authenticate, async(req, res) => {
+    try{
+        const companySpafs = await CommissionService.viewSpafs();
+        res.status(200).json(companySpafs);
+    }catch(error){
+        res.status(500).json({ message: error.message });
+    }
+})
+
 
 router.delete("/delete/:id", async (req, res) => {
     try {
