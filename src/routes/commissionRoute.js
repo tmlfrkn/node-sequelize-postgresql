@@ -84,7 +84,8 @@ router.post("/approve-application", authenticate, async (req, res) => {
   router.post("/reject-application/:companySpafId", authenticate, async (req, res) => {
     const { feedback } = req.body;
 
-    const { companySpafId } = req.params.companySpafId;
+    const companySpafId = req.params.companySpafId;
+    console.log(req.params);
   
     try {
       await CommissionService.rejectApplication(companySpafId, feedback);
