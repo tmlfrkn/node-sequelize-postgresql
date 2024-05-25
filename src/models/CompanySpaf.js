@@ -40,7 +40,8 @@ export const CompanySpaf = sequelize.define(
         },
         companyName: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: true,
+            defaultValue: null
         },
         address: {
             type: DataTypes.STRING,
