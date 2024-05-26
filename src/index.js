@@ -12,9 +12,11 @@ import deansOfficeRoute from "./routes/deansOfficeRoute.js";
 import adminRoute from "./routes/adminRoute.js"
 import cookieParser from 'cookie-parser';
 
+
 async function main() {
   const port = 3000;
-
+  const cors = require('cors');
+  app.use(cors());
   app.use(cookieParser());
 
   app.use("/api/projects", projectsRoutes);
