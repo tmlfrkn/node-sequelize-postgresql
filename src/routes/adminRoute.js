@@ -47,6 +47,16 @@ router.get("/viewDocuments", async (req, res) => {
     }
 });
 
+router.get("/download/:filename", async (req, res) => {
+    const filename = req.params.filename;
+    const filePath = `uploads/${filename}`;
+
+    res.download(filePath, (err) => {
+        if (err) {
+            res.status(500).json({ message: "Dosya indirilemedi.", error: err.message });
+        }
+    });
+});
 
 router.put("/updateAnnounceStatus", async (req, res) => {
     const { id } = req.body;
