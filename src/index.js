@@ -11,11 +11,11 @@ import documentRoute from "./routes/documentRoute.js";
 import deansOfficeRoute from "./routes/deansOfficeRoute.js";
 import adminRoute from "./routes/adminRoute.js"
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 
 
 async function main() {
   const port = 3000;
-  const cors = require('cors');
   app.use(cors());
   app.use(cookieParser());
 
