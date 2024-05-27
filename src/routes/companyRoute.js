@@ -35,7 +35,9 @@ router.post("/upload", authenticate, upload.single('file'), async (req, res) => 
     try {
         const fileData = req.file.path;
         const fileName = req.file.originalname;
+        console.log("Buraya girdi");
         const userId = req.user.id;
+        console.log(userId);
 
 
         const document = await CompanyService.uploadDocument(fileData, fileName, userId);
