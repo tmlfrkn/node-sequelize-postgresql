@@ -20,6 +20,7 @@ async function main() {
     origin: 'https://internship-management-system-eta.vercel.app', // Frontend domain
     credentials: true,  // Crucial for cookies to be accepted
   };
+  app.use(cors(corsOptions));
   app.use(cookieParser());
 
   app.use("/api/projects", projectsRoutes);
