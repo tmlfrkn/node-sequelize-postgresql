@@ -16,7 +16,10 @@ import cors from 'cors';
 
 async function main() {
   const port = 3000;
-  app.use(cors());
+  const corsOptions = {
+    origin: 'https://internship-management-system-eta.vercel.app', // Frontend domain
+    credentials: true,  // Crucial for cookies to be accepted
+  };
   app.use(cookieParser());
 
   app.use("/api/projects", projectsRoutes);
