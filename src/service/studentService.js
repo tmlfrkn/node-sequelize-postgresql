@@ -57,7 +57,11 @@ export async function studentLogin(mail, password, res) {
 
             //if password matches wit the one in the database
             //go ahead and generate a cookie for the user
-            res.cookie("token", token, { maxAge: 1 * 24 * 60 * 60, httpOnly: false });
+            res.cookie("token", token, {
+                httpOnly: true,
+                secure: true, // recommended to use along with httpOnly for HTTPS sites
+                sameSite: 'Strict' // or 'None' if cross-domain
+            });
             console.log("user", JSON.stringify(student, null, 2));
             console.log(token);
             //send user data
