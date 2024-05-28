@@ -53,11 +53,7 @@ export async function companyLogin(mail, password, res) {
 
             //if password matches wit the one in the database
             //go ahead and generate a cookie for the user
-            res.cookie("token", token,  {
-                httpOnly: true,
-                secure: true, // Set to true in production
-                sameSite: 'None' // Set to 'None' if your API and frontend are on different domains
-              });
+            res.cookie("token", token, { maxAge: 1 * 24 * 60 * 60, httpOnly: false });
             console.log("user", JSON.stringify(company, null, 2));
             console.log(token);
             //send user data
